@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<constant name="struts.action.extension" value="action,do"></constant>
+	<constant name="struts.devMode" value="false"></constant>
+	<constant name="struts.multipart.saveDir" value="D:/"></constant>
+	<constant name="struts.multipart.parser" value="jakarta"></constant>
+	<!-- include file="struts-action.xml"/-->
+	<package name="default" namespace="/" extends="struts-default">
+		<!-- <global-allowed-methods>login</global-allowed-methods> -->
+		<!-- <interceptors>
+			<interceptor-stack name="bookStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors> -->
+		<action name="mainPage" class="com.baruch.action.LoginAction" method="index">
+			<result name="login">/WEB-INF/common/login.jsp</result>
+		</action>
+		
+		<action name="login" class="com.baruch.action.LoginAction" method="login">
+			<result name="success" type="chain">
+				<param name="namespace">/book</param>
+				<param name="actionName">view</param>
+			</result>
+			<result name="error">/WEB-INF/common/login.jsp</result>
+		</action>
+	</package>
+	
+	<package name="book" extends="default" namespace="/book">
+		<!-- <default-interceptor-ref name="bookStack"></default-interceptor-ref> -->
+		<action name="view" class="searchAction" method="view">
+			<result name="success">/WEB-INF/book/list.jsp</result>
+		</action>
+	</package>
+</struts>

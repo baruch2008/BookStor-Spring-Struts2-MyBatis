@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.baruch.dao.IBookDao">
+
+	<!-- 为了返回list 类型而定义的returnMap -->
+	<resultMap type="Book" id="resultListBook">
+        <result column="isbn" property="isbn" />
+        <result column="name" property="name" />
+        <result column="author" property="author" />
+        <result column="press" property="press" />
+        <result column="price" property="price" />
+    </resultMap>
+	
+	<!-- 返回list 的select 语句，注意 resultMap 的值是指向前面定义好的 -->
+	<select id="getBooks" resultMap="resultListBook">
+	    select isbn, name, author, press, price from Book
+	</select>
+	
+	<select id="getBookByISBN" parameterType="string" resultType="Book">
+		select isbn, name, author, press, price from Book where isbn="${isbn}"
+	</select>
+	
+	<select id="getBookByName" parameterType="string" resultType="Book">
+		select isbn, name, author, press, price from Book where name="${name}"
+	</select>
+	
+	<select id="queryBooks1" parameterType="java.util.Map" resultMap="resultListBook">
+		select isbn, name, author, press, price from Book
+		<where>
+			<if test='queryType == 1'> <!-- ISBN -->
+				and isbn like concat('%', #{queryValue}, '%')
+			</if>
+			<if test='queryType == 2'> <!-- Name -->
+				and name like concat('%',#{queryValue},'%')
+			</if>
+			<if test='queryType == 3'> <!-- Author -->
+				and author like concat('%', #{queryValue}, '%')
+			</if>
+		</where>
+		limit #{startPosition, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+	</select>
+	
+	<select id="queryBooks2" resultMap="resultListBook">
+		select isbn, name, author, press, price from Book
+		<where>
+			<if test='queryType == 1'> <!-- ISBN -->
+				and isbn like concat('%', #{queryValue}, '%')
+			</if>
+			<if test='queryType == 2'> <!-- Name -->
+				and name like concat('%',#{queryValue},'%')
+			</if>
+			<if test='queryType == 3'> <!-- Author -->
+				and author like concat('%', #{queryValue}, '%')
+			</if>
+		</where>
+		limit #{startPosition, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+	</select>
+</mapper>
