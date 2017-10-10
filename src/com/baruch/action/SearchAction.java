@@ -29,7 +29,11 @@ public class SearchAction extends ActionSupport {
 		return queryType;
 	}
 
-	
+	/**
+	 * 设置查询类型
+	 * 
+	 * @param queryType 查询类型，取值可为:'1':'ISBN','2':'名称','3':'作者'
+	 */
 	public void setQueryType(int queryType) {
 		this.queryType = queryType;
 	}
