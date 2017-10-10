@@ -1,0 +1,4 @@
+此程序是用于学习Struts,MyBatis和Spring而建的
+
+create database bookstor;
+create table book(name varchar(30), isbn varchar(20), author varchar(20), press varchar(20), price number(5,2));
