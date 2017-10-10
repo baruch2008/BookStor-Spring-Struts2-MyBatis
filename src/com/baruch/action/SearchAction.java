@@ -29,6 +29,7 @@ public class SearchAction extends ActionSupport {
 		return queryType;
 	}
 
+	
 	public void setQueryType(int queryType) {
 		this.queryType = queryType;
 	}
